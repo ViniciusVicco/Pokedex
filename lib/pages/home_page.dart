@@ -12,10 +12,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  PokemonController pokemon = PokemonController();
+  PokemonRepository repository = PokemonRepository();
   bool isLoading = false;
   bool isComplete = false;
   bool hasError = false;
+  String image = '';
   List<PokemonModel> pokemonModel = [];
   Color backgroundColor = Colors.white;
   @override
@@ -61,6 +62,9 @@ class _MyHomePageState extends State<MyHomePage> {
             if (isLoading) {
               return const Center(child: CircularProgressIndicator());
             }
+            // if (isComplete) {
+            //   return Image.network(repository.image);
+            // }
             if (isComplete && pokemonModel.isNotEmpty) {
               return ListView.builder(
                 itemBuilder: (context, index) {
@@ -94,11 +98,14 @@ class _MyHomePageState extends State<MyHomePage> {
           }),
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          pokemonModel = await pokemon.getPokemonsAllFromKanto(
+          pokemonModel = await repository.getPokemonsAllFromKanto(
               RegionPokedex.jhoto, onLoading, onCompleted);
           setState(() {
             backgroundColor = RegionPokedex.jhoto.color;
           });
+          // setState(() {
+          //   repository.getPokemonSprite(onLoading, onCompleted);
+          // });
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),

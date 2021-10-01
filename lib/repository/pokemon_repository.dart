@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:pokedex/models/pokemon_model.dart';
 import 'package:pokedex/models/regions.dart';
 
-class PokemonController {
+class PokemonRepository {
   Dio dio = Dio();
-  String url = 'https://pokeapi.co/api/v2/';
+  String baseUrl = 'https://pokeapi.co/api/v2/';
+  String image;
 
   Future<List<PokemonModel>> getPokemonsAllFromKanto(
       RegionPokedex regionPokedex,
@@ -25,7 +28,18 @@ class PokemonController {
     return listaPokemon;
   }
 
-  Future<PokemonModel> getOnePokemon(String url) async {
+  Future<PokemonModel> getOnePokemon(
+      String url, Function isLoading, Function completed) async {
     dio.get(url);
+    return null;
+  }
+
+  Future<String> getPokemonSprite(
+      Function isLoading, Function completed) async {
+    isLoading();
+    final result = await dio.get(baseUrl + 'pokemon/ditto/');
+    image = result.data['sprites']['front_default'];
+    completed();
+    return image;
   }
 }
