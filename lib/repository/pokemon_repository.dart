@@ -24,4 +24,8 @@ class PokemonController {
     completed();
     return listaPokemon;
   }
+
+  Future<PokemonModel> getOnePokemon(String url) async {
+    dio.get(url);
+  }
 }
