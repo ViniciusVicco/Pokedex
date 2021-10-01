@@ -26,6 +26,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void onLoading() {
     setState(() {
+      backgroundColor = Colors.white;
       isLoading = true;
       isComplete = false;
       hasError = false;
@@ -54,7 +55,15 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: AppBar(
-        title: Text("Pokedex"),
+        title: Row(
+          children: [
+            Text("Pokedex"),
+            Image.asset(
+              'assets/pikachu.png',
+              scale: 6,
+            ),
+          ],
+        ),
       ),
       body: StreamBuilder<Object>(
           stream: null,
@@ -68,7 +77,7 @@ class _MyHomePageState extends State<MyHomePage> {
             if (isComplete && pokemonModel.isNotEmpty) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  return Text(pokemonModel[index].name);
+                  return Center(child: Text(pokemonModel[index].name));
                 },
                 itemCount: pokemonModel.length,
               );
