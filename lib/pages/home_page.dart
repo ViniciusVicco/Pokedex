@@ -17,7 +17,7 @@ class _MyHomePageState extends State<MyHomePage> {
   bool isComplete = false;
   bool hasError = false;
   List<PokemonModel> pokemonModel = [];
-  Color color = Colors.white;
+  Color backgroundColor = Colors.white;
   @override
   void initState() {
     super.initState();
@@ -33,6 +33,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void onError() {
     setState(() {
+      backgroundColor = Colors.red;
       isLoading = false;
       isComplete = false;
       hasError = false;
@@ -50,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: backgroundColor,
       appBar: AppBar(
         title: Text("Pokedex"),
       ),
@@ -95,6 +96,9 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () async {
           pokemonModel = await pokemon.getPokemonsAllFromKanto(
               RegionPokedex.jhoto, onLoading, onCompleted);
+          setState(() {
+            backgroundColor = RegionPokedex.jhoto.color;
+          });
         },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
